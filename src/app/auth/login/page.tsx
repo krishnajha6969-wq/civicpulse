@@ -2,6 +2,7 @@
 
 import React, { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import CitizenLogin from '../../../components/auth/CitizenLogin';
 
 function LoginContent() {
@@ -13,7 +14,11 @@ function LoginContent() {
     <CitizenLogin
       onBackToHome={() => router.push('/')}
       onGoToRegister={() =>
-        router.push(destination ? `/auth/register?destination=${destination}` : '/auth/register')
+        router.push(
+          destination
+            ? `/auth/register?destination=${destination}`
+            : '/auth/register'
+        )
       }
       onGoToSuperAdmin={() => router.push('/auth/admin')}
       intendedDestination={destination}
@@ -23,8 +28,21 @@ function LoginContent() {
 
 export default function LoginPage() {
   return (
-    <Suspense fallback={<div style={{ minHeight: '100vh', background: '#070e1b' }} />}>
-      <LoginContent />
-    </Suspense>
+    <GoogleOAuthProvider
+      clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}
+    >
+      <Suspense
+        fallback={
+          <div
+            style={{
+              minHeight: '100vh',
+              background: '#070e1b',
+            }}
+          />
+        }
+      >
+        <LoginContent />
+      </Suspense>
+    </GoogleOAuthProvider>
   );
 }
