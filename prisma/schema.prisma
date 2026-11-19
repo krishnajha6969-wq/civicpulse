@@ -1,0 +1,285 @@
+// CivicPulse — Mira Bhayandar Municipal Corporation (MBMC)
+// PostgreSQL / Neon Relational Database Schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  CITIZEN
+  WARD_STAFF
+  SUPER_ADMIN
+}
+
+enum IssueCategory {
+  ROADS
+  WASTE
+  WATER_SUPPLY
+  STREETLIGHT
+  DRAINAGE
+  PUBLIC_SAFETY
+  TRAFFIC
+  OTHER
+}
+
+enum IssueStatus {
+  NEW
+  ASSIGNED
+  IN_PROGRESS
+  ON_HOLD
+  RESOLUTION_SUBMITTED
+  VERIFICATION_PENDING
+  RESOLVED
+  REJECTED
+}
+
+enum IssuePriority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+enum TeamStatus {
+  AVAILABLE
+  ON_ASSIGNMENT
+  BUSY
+  OFFLINE
+}
+
+enum CommentVisibility {
+  INTERNAL
+  CITIZEN_VISIBLE
+}
+
+model User {
+  id              String      @id @default(uuid())
+  googleId        String?     @unique
+  email           String      @unique
+  passwordHash    String?
+  name            String
+  phone           String?
+  profileImage    String?
+  role            UserRole    @default(CITIZEN)
+  
+  // Scoping & assignments
+  wardId          String?
+  ward            Ward?       @relation(fields: [wardId], references: [id])
+  employeeId      String?     @unique
+  department      String?
+  division        String?
+  
+  teamId          String?
+  team            Team?       @relation("TeamMembers", fields: [teamId], references: [id])
+  ledTeams        Team[]      @relation("TeamLeader")
+
+  // Relationships
+  reportedIssues      Issue[]            @relation("ReportedByUser")
+  assignedIssues      Issue[]            @relation("AssignedStaffUser")
+  createdAssignments  IssueAssignment[]  @relation("AssignmentCreator")
+  assignedHistory     IssueAssignment[]  @relation("AssignedStaff")
+  statusChanges       IssueStatusHistory[]
+  comments            IssueComment[]
+  notifications       Notification[]
+  uploadedAttachments IssueAttachment[]
+  auditLogs           AuditLog[]
+
+  isActive        Boolean     @default(true)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+
+  @@index([email])
+  @@index([role])
+  @@index([wardId])
+  @@map("users")
+}
+
+model Ward {
+  id           String      @id @default(uuid())
+  wardNumber   Int         @unique
+  name         String
+  municipality String      @default("Mira Bhayandar Municipal Corporation")
+  description  String?
+  isActive     Boolean     @default(true)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  users        User[]
+  issues       Issue[]
+  teams        Team[]
+
+  @@index([wardNumber])
+  @@map("wards")
+}
+
+model Issue {
+  id              String         @id @default(uuid())
+  issueNumber     String         @unique // e.g. CP-1048
+  title           String
+  description     String
+  category        IssueCategory
+  priority        IssuePriority  @default(MEDIUM)
+  status          IssueStatus    @default(NEW)
+  latitude        Float
+  longitude       Float
+  address         String
+
+  wardId          String
+  ward            Ward           @relation(fields: [wardId], references: [id])
+
+  reportedBy      String
+  reporter        User           @relation("ReportedByUser", fields: [reportedBy], references: [id])
+
+  assignedTeamId  String?
+  assignedTeam    Team?          @relation(fields: [assignedTeamId], references: [id])
+
+  assignedStaffId String?
+  assignedStaff   User?          @relation("AssignedStaffUser", fields: [assignedStaffId], references: [id])
+
+  attachments     IssueAttachment[]
+  assignments     IssueAssignment[]
+  statusHistory   IssueStatusHistory[]
+  comments        IssueComment[]
+  notifications   Notification[]
+
+  dueAt           DateTime?
+  resolvedAt      DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([status])
+  @@index([priority])
+  @@index([category])
+  @@index([wardId])
+  @@index([reportedBy])
+  @@index([assignedStaffId])
+  @@index([assignedTeamId])
+  @@index([createdAt])
+  @@map("issues")
+}
+
+model IssueAttachment {
+  id          String    @id @default(uuid())
+  issueId     String
+  issue       Issue     @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  fileUrl     String
+  fileType    String
+  uploadedBy  String
+  uploader    User      @relation(fields: [uploadedBy], references: [id])
+  createdAt   DateTime  @default(now())
+
+  @@index([issueId])
+  @@map("issue_attachments")
+}
+
+model Team {
+  id            String       @id @default(uuid())
+  name          String
+  department    String
+  teamLeaderId  String?
+  teamLeader    User?        @relation("TeamLeader", fields: [teamLeaderId], references: [id])
+  wardId        String
+  ward          Ward         @relation(fields: [wardId], references: [id])
+  status        TeamStatus   @default(AVAILABLE)
+
+  members       User[]       @relation("TeamMembers")
+  assignedIssues Issue[]
+  assignments   IssueAssignment[]
+
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@index([wardId])
+  @@index([status])
+  @@map("teams")
+}
+
+model IssueAssignment {
+  id            String     @id @default(uuid())
+  issueId       String
+  issue         Issue      @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  staffId       String?
+  staff         User?      @relation("AssignedStaff", fields: [staffId], references: [id])
+  teamId        String?
+  team          Team?      @relation(fields: [teamId], references: [id])
+  assignedBy    String
+  assigner      User       @relation("AssignmentCreator", fields: [assignedBy], references: [id])
+  assignedAt    DateTime   @default(now())
+  unassignedAt  DateTime?
+  reason        String?
+
+  @@index([issueId])
+  @@index([staffId])
+  @@index([teamId])
+  @@map("issue_assignments")
+}
+
+model IssueStatusHistory {
+  id          String       @id @default(uuid())
+  issueId     String
+  issue       Issue        @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  oldStatus   IssueStatus
+  newStatus   IssueStatus
+  changedBy   String
+  changer     User         @relation(fields: [changedBy], references: [id])
+  note        String?
+  createdAt   DateTime     @default(now())
+
+  @@index([issueId])
+  @@index([createdAt])
+  @@map("issue_status_history")
+}
+
+model IssueComment {
+  id          String             @id @default(uuid())
+  issueId     String
+  issue       Issue              @relation(fields: [issueId], references: [id], onDelete: Cascade)
+  userId      String
+  author      User               @relation(fields: [userId], references: [id])
+  comment     String
+  visibility  CommentVisibility  @default(CITIZEN_VISIBLE)
+  createdAt   DateTime           @default(now())
+
+  @@index([issueId])
+  @@map("issue_comments")
+}
+
+model Notification {
+  id          String     @id @default(uuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        String     // ISSUE_ASSIGNED, STATUS_CHANGED, SLA_WARNING, etc.
+  title       String
+  message     String
+  issueId     String?
+  issue       Issue?     @relation(fields: [issueId], references: [id], onDelete: SetNull)
+  isRead      Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
+}
+
+model AuditLog {
+  id          String     @id @default(uuid())
+  userId      String?
+  user        User?      @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action      String     // USER_LOGIN, ISSUE_CREATED, ISSUE_ASSIGNED, etc.
+  entityType  String     // ISSUE, USER, TEAM, etc.
+  entityId    String
+  metadata    Json?
+  ipAddress   String?
+  createdAt   DateTime   @default(now())
+
+  @@index([userId])
+  @@index([action])
+  @@index([entityType])
+  @@index([createdAt])
+  @@map("audit_logs")
+}

@@ -1,0 +1,142 @@
+.workflowSection {
+  background-color: var(--color-bg-primary, #0f1729);
+  padding: var(--space-20, 80px) 0;
+  border-bottom: 1px solid var(--color-border-light, #1e2d47);
+  position: relative;
+}
+
+.workflowContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+  max-width: 780px;
+  margin-bottom: var(--space-16, 64px);
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: var(--fw-bold, 700);
+  line-height: var(--lh-tight, 1.15);
+  color: var(--color-text-primary, #ffffff);
+  margin-bottom: var(--space-3, 12px);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-base, 1rem);
+  color: var(--color-text-secondary, #94a3b8);
+  line-height: var(--lh-normal, 1.5);
+}
+
+.workflowGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4, 16px);
+  width: 100%;
+  position: relative;
+}
+
+.stepCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-2, 8px);
+}
+
+.stepHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3, 12px);
+  margin-bottom: var(--space-4, 16px);
+  min-height: 70px;
+}
+
+.stepBadge {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xs, 0.75rem);
+  font-weight: var(--fw-bold, 700);
+  color: var(--color-text-on-accent, #0f1729);
+  background-color: var(--color-accent-mint, #5cebaa);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 0 10px rgba(92, 235, 170, 0.4);
+}
+
+.stepText {
+  display: flex;
+  flex-direction: column;
+}
+
+.stepTitle {
+  font-family: var(--font-heading);
+  font-size: var(--fs-base, 1rem);
+  font-weight: var(--fw-semibold, 600);
+  color: var(--color-text-primary, #ffffff);
+  margin-bottom: 2px;
+}
+
+.stepDesc {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs, 0.75rem);
+  color: var(--color-text-secondary, #94a3b8);
+  line-height: var(--lh-snug, 1.35);
+}
+
+.illustrationWrapper {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg, 16px);
+  overflow: hidden;
+  transition: transform var(--transition-fast, 150ms ease);
+}
+
+.stepCard:hover .illustrationWrapper {
+  transform: translateY(-4px);
+}
+
+.illustrationImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
+}
+
+.connector {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .workflowGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8, 32px);
+  }
+}
+
+@media (max-width: 640px) {
+  .workflowGrid {
+    grid-template-columns: 1fr;
+    gap: var(--space-8, 32px);
+  }
+
+  .stepHeader {
+    min-height: auto;
+  }
+
+  .illustrationWrapper {
+    height: 180px;
+  }
+}

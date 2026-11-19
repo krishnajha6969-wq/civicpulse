@@ -1,0 +1,645 @@
+/* ============================================================
+   CivicPulse — Portal Selection Screen
+   v3 — Root-cause fixes:
+   1. Background is now the CLEAN aerial cityscape (hero-bg-2x.png),
+      NOT a screenshot of the old portal-selection page.
+   2. Single dark overlay, no duplicate layers.
+   3. Correct scroll + overflow, no card cropping.
+   ============================================================ */
+
+/* ── Page Wrapper ── */
+.pageWrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow-y: auto;
+  overflow-x: hidden;
+  color: #ffffff;
+  font-family: var(--font-body, 'Inter', system-ui, -apple-system, sans-serif);
+  animation: pageEnter 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes pageEnter {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Fixed Background (cityscape ONLY — no UI elements) ── */
+.pageWrapper::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  /* Use the CLEAN aerial night city image — NOT any screenshot of the portal page */
+  background-image: url('/images/civicpulse-hero-bg-2x.png');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  pointer-events: none;
+}
+
+/* ── Single Dark Overlay (contrast only, no opacity on text) ── */
+.pageWrapper::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(
+    180deg,
+    rgba(3, 8, 20, 0.82) 0%,
+    rgba(4, 10, 24, 0.72) 30%,
+    rgba(4, 10, 24, 0.78) 70%,
+    rgba(3, 8, 20, 0.90) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Scrollable Content Layer (above both pseudo-elements) ── */
+.contentLayer {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  padding-bottom: 40px;
+}
+
+/* ── Top Bar ── */
+.topBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 48px;
+  max-width: 1320px;
+  width: 100%;
+  margin: 0 auto;
+  flex-shrink: 0;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+}
+
+.brandIcon {
+  color: #34d399;
+  flex-shrink: 0;
+  filter: drop-shadow(0 0 8px rgba(52, 211, 153, 0.55));
+}
+
+.brandName {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.02em;
+}
+
+.backBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.82);
+  cursor: pointer;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  backdrop-filter: blur(8px);
+  transition: all 200ms ease;
+}
+
+.backBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.13);
+  border-color: rgba(255, 255, 255, 0.28);
+  transform: translateX(-2px);
+}
+
+.backBtn:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 3px;
+}
+
+/* ── Heading Section ── */
+.headingSection {
+  text-align: center;
+  padding: 8px 24px 32px;
+  max-width: 860px;
+  margin: 0 auto;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.getStartedPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(52, 211, 153, 0.5);
+  background: rgba(52, 211, 153, 0.09);
+  border-radius: 9999px;
+  padding: 5px 16px;
+  font-size: 0.70rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #34d399;
+  margin-bottom: 18px;
+}
+
+.getStartedDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 6px #34d399;
+  display: inline-block;
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+.mainHeading {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: clamp(2.4rem, 4.5vw, 3.6rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0 0 14px;
+}
+
+.portalAccent {
+  /* Cyan gradient to match approved reference */
+  background: linear-gradient(135deg, #2dd4bf 0%, #22d3ee 60%, #34d399 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.4));
+}
+
+.mainSubtitle {
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
+  color: rgba(203, 213, 225, 0.88);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.destBanner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(34, 211, 238, 0.10);
+  border: 1px solid rgba(34, 211, 238, 0.35);
+  border-radius: 9999px;
+  padding: 6px 16px;
+  margin-top: 14px;
+  font-size: 0.82rem;
+  color: #a5f3fc;
+}
+
+/* ── Cards Section ── */
+.cardsSection {
+  padding: 0 32px;
+  max-width: 1260px;
+  width: 100%;
+  margin: 0 auto;
+  flex: 0 0 auto; /* don't stretch, grow with content */
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: start; /* cards grow to their OWN content height, no stretching */
+}
+
+/* ── Card Base ── */
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  /* Solid enough background — city must NOT show through card text */
+  background: rgba(7, 15, 32, 0.93);
+  border: 1.5px solid rgba(255, 255, 255, 0.10);
+  transition: transform 280ms cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 280ms ease,
+              border-color 280ms ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* ── Card Variants ── */
+.cardCitizen {
+  border-color: rgba(52, 211, 153, 0.40);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 20px rgba(52, 211, 153, 0.08);
+}
+
+.cardCitizen:hover {
+  border-color: rgba(52, 211, 153, 0.70);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65), 0 0 40px rgba(52, 211, 153, 0.20);
+}
+
+.cardWard {
+  border-color: rgba(56, 189, 248, 0.40);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 20px rgba(56, 189, 248, 0.08);
+}
+
+.cardWard:hover {
+  border-color: rgba(56, 189, 248, 0.70);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65), 0 0 40px rgba(56, 189, 248, 0.20);
+}
+
+.cardAdmin {
+  border-color: rgba(167, 139, 250, 0.40);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 20px rgba(167, 139, 250, 0.08);
+}
+
+.cardAdmin:hover {
+  border-color: rgba(167, 139, 250, 0.70);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.65), 0 0 40px rgba(167, 139, 250, 0.20);
+}
+
+/* ── Illustration Area ── */
+.illustrationWrapper {
+  position: relative;
+  width: 100%;
+  /* Fixed aspect ratio so illustration always fully shows */
+  aspect-ratio: 286 / 170;
+  overflow: hidden;
+  background: #020912;
+  flex-shrink: 0;
+}
+
+.illustrationImg {
+  width: 100%;
+  height: 100%;
+  /* cover but centered — image is wide enough that crop is good */
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  transition: transform 380ms ease;
+  /* No blur, no opacity reduction — display at full quality */
+}
+
+.card:hover .illustrationImg {
+  transform: scale(1.04);
+}
+
+/* Bottom gradient to blend illustration into card body */
+.illustrationFade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(7, 15, 32, 0.80) 75%,
+    rgba(7, 15, 32, 0.97) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Card Body ── */
+.cardBody {
+  padding: 18px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Title row: title text + arrow */
+.cardTitleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0 0 8px;
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: 1.28rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  cursor: pointer;
+  text-align: left;
+  line-height: 1.2;
+  transition: color 200ms ease;
+}
+
+.cardTitleBtn:hover {
+  color: #e2e8f0;
+}
+
+.cardTitleBtn:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.titleArrow {
+  font-size: 1.1rem;
+  transition: transform 200ms ease;
+  opacity: 0.65;
+  line-height: 1;
+}
+
+.card:hover .titleArrow {
+  transform: translateX(4px);
+  opacity: 1;
+}
+
+.cardDesc {
+  font-size: 0.86rem;
+  color: rgba(148, 163, 184, 0.92);
+  line-height: 1.5;
+  margin: 0 0 14px;
+}
+
+/* ── Feature Box ── */
+.featureBox {
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.cardCitizen .featureBox {
+  background: rgba(52, 211, 153, 0.07);
+  border: 1px solid rgba(52, 211, 153, 0.15);
+}
+
+.cardWard .featureBox {
+  background: rgba(56, 189, 248, 0.07);
+  border: 1px solid rgba(56, 189, 248, 0.15);
+}
+
+.cardAdmin .featureBox {
+  background: rgba(167, 139, 250, 0.07);
+  border: 1px solid rgba(167, 139, 250, 0.15);
+}
+
+.featureItem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.81rem;
+  color: rgba(226, 232, 240, 0.90);
+  line-height: 1.35;
+}
+
+.featureIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.cardCitizen .featureIcon { color: #34d399; }
+.cardWard    .featureIcon { color: #38bdf8; }
+.cardAdmin   .featureIcon { color: #a78bfa; }
+
+/* ── Primary CTA Button ── */
+.ctaBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 20px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  letter-spacing: -0.01em;
+  transition: all 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ctaBtn:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.8);
+  outline-offset: 3px;
+}
+
+.ctaCitizen {
+  background: #34d399;
+  color: #012318;
+  box-shadow: 0 4px 18px rgba(52, 211, 153, 0.35);
+}
+.ctaCitizen:hover {
+  background: #4ade80;
+  box-shadow: 0 6px 24px rgba(52, 211, 153, 0.55);
+  transform: translateY(-2px);
+}
+
+.ctaWard {
+  background: #38bdf8;
+  color: #012030;
+  box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);
+}
+.ctaWard:hover {
+  background: #60a5fa;
+  box-shadow: 0 6px 24px rgba(56, 189, 248, 0.55);
+  transform: translateY(-2px);
+}
+
+.ctaAdmin {
+  background: #a78bfa;
+  color: #1a0050;
+  box-shadow: 0 4px 18px rgba(167, 139, 250, 0.35);
+}
+.ctaAdmin:hover {
+  background: #c4b5fd;
+  box-shadow: 0 6px 24px rgba(167, 139, 250, 0.55);
+  transform: translateY(-2px);
+}
+
+.ctaArrow {
+  transition: transform 200ms ease;
+}
+
+.ctaBtn:hover .ctaArrow {
+  transform: translateX(4px);
+}
+
+/* ── Secondary Register Button (Citizen only) ── */
+.subBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  margin-top: 9px;
+  padding: 9px 16px;
+  background: none;
+  border: 1px solid rgba(52, 211, 153, 0.24);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(52, 211, 153, 0.85);
+  cursor: pointer;
+  transition: all 180ms ease;
+}
+
+.subBtn:hover {
+  background: rgba(52, 211, 153, 0.09);
+  border-color: rgba(52, 211, 153, 0.45);
+  color: #ffffff;
+}
+
+.subBtn:focus-visible {
+  outline: 2px solid #34d399;
+  outline-offset: 2px;
+}
+
+/* ── Access Note (Ward / Admin) ── */
+.accessNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 9px;
+  font-size: 0.72rem;
+  color: rgba(148, 163, 184, 0.55);
+  line-height: 1.4;
+}
+
+/* ── Bottom Banner ── */
+.bottomBanner {
+  margin: 32px auto 0;
+  padding: 0 32px;
+  max-width: 1260px;
+  width: 100%;
+}
+
+.bannerInner {
+  background: rgba(7, 15, 32, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 18px;
+  backdrop-filter: blur(14px);
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  box-shadow: 0 8px 36px rgba(0, 0, 0, 0.45);
+}
+
+.bannerLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.bannerIconBox {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: rgba(52, 211, 153, 0.10);
+  border: 1px solid rgba(52, 211, 153, 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #34d399;
+}
+
+.bannerCopy {
+  min-width: 0;
+}
+
+.bannerTitle {
+  font-family: var(--font-heading, 'Inter', sans-serif);
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  margin: 0 0 3px;
+}
+
+.bannerText {
+  font-size: 0.80rem;
+  color: rgba(148, 163, 184, 0.82);
+  margin: 0;
+  line-height: 1.4;
+  max-width: 420px;
+}
+
+.bannerDivider {
+  width: 1px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.10);
+  flex-shrink: 0;
+}
+
+.bannerPillars {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+}
+
+.pillar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: rgba(226, 232, 240, 0.85);
+  white-space: nowrap;
+}
+
+.pillarIconGreen  { color: #34d399; display: flex; align-items: center; }
+.pillarIconBlue   { color: #38bdf8; display: flex; align-items: center; }
+.pillarIconPurple { color: #a78bfa; display: flex; align-items: center; }
+
+/* ── Responsive ── */
+@media (max-width: 1100px) {
+  .topBar        { padding: 20px 28px; }
+  .cardsSection  { padding: 0 20px; }
+  .bottomBanner  { padding: 0 20px; }
+  .cardsGrid     { gap: 18px; }
+}
+
+@media (max-width: 860px) {
+  .cardsGrid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+
+  .bannerInner { flex-direction: column; align-items: flex-start; gap: 16px; }
+  .bannerDivider { display: none; }
+  .bannerPillars { margin-left: 0; flex-wrap: wrap; width: 100%; }
+}
+
+@media (max-width: 520px) {
+  .topBar { padding: 14px 18px; }
+  .cardsSection { padding: 0 14px; }
+  .bottomBanner { padding: 0 14px; }
+  .mainHeading { font-size: 2.1rem; }
+  .cardBody { padding: 16px 16px 18px; }
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .pageWrapper { animation: none; }
+  .card:hover  { transform: none; }
+  .card:hover .illustrationImg { transform: none; }
+  .ctaBtn:hover { transform: none; }
+  .getStartedDot { animation: none; }
+}

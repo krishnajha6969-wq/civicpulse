@@ -1,0 +1,125 @@
+.sourcesSection {
+  background-color: var(--color-bg-primary, #0f1729);
+  padding: var(--space-20, 80px) 0;
+  border-bottom: 1px solid var(--color-border-light, #1e2d47);
+}
+
+.sourcesContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.sourcesHeader {
+  max-width: 680px;
+  margin-bottom: var(--space-12, 48px);
+}
+
+.sourcesTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  font-weight: var(--fw-bold, 700);
+  line-height: var(--lh-tight, 1.15);
+  color: var(--color-text-primary, #ffffff);
+  margin-bottom: var(--space-3, 12px);
+}
+
+.sourcesSubtitle {
+  font-family: var(--font-body);
+  font-size: var(--fs-base, 1rem);
+  color: var(--color-text-secondary, #94a3b8);
+  line-height: var(--lh-normal, 1.5);
+}
+
+.sourcesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-8, 32px);
+  width: 100%;
+  max-width: 1020px;
+}
+
+.sourceCard {
+  background-color: var(--color-bg-card, #1a2744);
+  border: 1px solid var(--color-border, #2a3a55);
+  border-radius: var(--radius-lg, 16px);
+  padding: var(--space-8, 32px) var(--space-6, 24px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform var(--transition-fast, 150ms ease),
+              border-color var(--transition-fast, 150ms ease),
+              box-shadow var(--transition-fast, 150ms ease);
+}
+
+.sourceCard:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-border-accent, rgba(92, 235, 170, 0.3));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+}
+
+.iconContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: var(--space-4, 16px);
+}
+
+.iconCircle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, rgba(92, 235, 170, 0.14) 0%, rgba(15, 23, 41, 0.6) 80%);
+  border: 1px solid rgba(92, 235, 170, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: transform var(--transition-fast, 150ms ease),
+              border-color var(--transition-fast, 150ms ease),
+              box-shadow var(--transition-fast, 150ms ease);
+}
+
+.sourceCard:hover .iconCircle {
+  transform: scale(1.06);
+  border-color: rgba(92, 235, 170, 0.6);
+  box-shadow: 0 8px 24px rgba(92, 235, 170, 0.2);
+}
+
+.portalTag {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-accent-mint, #5cebaa);
+  background-color: rgba(92, 235, 170, 0.08);
+  border: 1px solid rgba(92, 235, 170, 0.22);
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: var(--fs-lg, 1.25rem);
+  font-weight: var(--fw-semibold, 600);
+  color: var(--color-text-primary, #ffffff);
+  margin-bottom: var(--space-2, 8px);
+}
+
+.cardDesc {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm, 0.875rem);
+  color: var(--color-text-secondary, #94a3b8);
+  line-height: var(--lh-normal, 1.5);
+}
+
+@media (max-width: 868px) {
+  .sourcesGrid {
+    grid-template-columns: 1fr;
+    max-width: 440px;
+    gap: var(--space-4, 16px);
+  }
+}

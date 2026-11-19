@@ -1,0 +1,310 @@
+/* ============================================================
+   HeroSection — Clean hero using civicpulse-hero-bg.png
+
+   Layout strategy:
+   ─ .hero        : position:relative, no fixed height (height
+                    is determined by the background image aspect ratio)
+   ─ .heroBgWrapper: holds the <img>, spans full width, height auto
+   ─ .heroOverlay : position:absolute inset-0, pointer-events on
+                    the left ~45% where the navy space is
+   ─ No gradient overlays — the image itself has the dark left area
+   ============================================================ */
+
+/* ─── Section wrapper ────────────────────────────────────── */
+.hero {
+  position: relative;
+  width: 100%;
+  background-color: #0d1526; /* matches the image's darkest navy */
+  overflow: hidden;
+}
+
+/* ─── Background image wrapper ──────────────────────────── */
+/*
+  The image is 1024×366 (ratio 2.80:1).
+  width:100% + height:auto preserves this ratio at every viewport.
+  The next/image component inside is styled the same way.
+  min-height ensures a floor so text doesn't get too compressed
+  on very wide screens where the hero would otherwise become thin.
+*/
+.heroBgWrapper {
+  position: relative;
+  width: 100%;
+  line-height: 0; /* removes phantom inline gap below the img */
+}
+
+.heroBgImg {
+  width: 100% !important;
+  height: auto !important;
+  display: block;
+  /* No object-fit — the image renders at its natural aspect ratio */
+}
+
+/* ─── Text overlay ───────────────────────────────────────── */
+/*
+  Absolutely covers the entire hero section.
+  Content is vertically and horizontally positioned to sit
+  in the LEFT navy area of the image (roughly the left 38%).
+*/
+.heroOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  /* max-width matches the site's content column */
+  padding: 0 max(32px, calc((100% - 1360px) / 2 + 32px));
+  /* top padding offsets the transparent fixed navbar (64px) */
+  padding-top: 64px;
+}
+
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Constrain text to the navy left area — don't bleed into the city */
+  max-width: clamp(260px, 36%, 500px);
+}
+
+/* ─── Eyebrow ────────────────────────────────────────────── */
+.heroEyebrow {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: rgba(148, 163, 184, 0.9);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+/* ─── H1 ─────────────────────────────────────────────────── */
+.heroHeading {
+  font-family: var(--font-heading);
+  /* clamp: smallest at 1.5rem (mobile), scales with viewport,
+     capped at 3rem so it fits the navy zone */
+  font-size: clamp(1.55rem, 3.2vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: #ffffff;
+  margin-bottom: 14px;
+}
+
+/* ─── Subtitle ───────────────────────────────────────────── */
+.heroSubtitle {
+  font-family: var(--font-body);
+  font-size: clamp(0.82rem, 1vw, 1rem);
+  color: rgba(148, 163, 184, 0.88);
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+/* ─── Action buttons ─────────────────────────────────────── */
+.heroActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.primaryBtn {
+  --mag-x: 0px;
+  --mag-y: 0px;
+  --hover-y: 0px;
+  --btn-scale: 1;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(180deg, #6bf5b5 0%, #4ae39f 100%);
+  color: #0b1420;
+  font-family: var(--font-body);
+  font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 7px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 3px 12px rgba(74, 227, 159, 0.2);
+  cursor: pointer;
+  white-space: nowrap;
+  transform: translate3d(var(--mag-x), calc(var(--mag-y) + var(--hover-y)), 0) scale(var(--btn-scale));
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1),
+              background 200ms ease,
+              box-shadow 200ms ease,
+              border-color 200ms ease;
+  will-change: transform;
+}
+
+.primaryBtn:hover {
+  --hover-y: -2px;
+  background: linear-gradient(180deg, #7cf8be 0%, #5cebaa 100%);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 6px 20px rgba(74, 227, 159, 0.32);
+}
+
+.primaryBtn:active {
+  --hover-y: 0px;
+  --btn-scale: 0.98;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 8px rgba(74, 227, 159, 0.25);
+  transition-duration: 80ms;
+}
+
+.primaryBtn:focus-visible {
+  outline: 2px solid #5cebaa;
+  outline-offset: 3px;
+}
+
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: rgba(13, 21, 38, 0.6);
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: clamp(0.8rem, 0.9vw, 0.92rem);
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 7px;
+  cursor: pointer;
+  white-space: nowrap;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transform: translateY(0);
+  transition: transform 200ms ease,
+              background-color 200ms ease,
+              border-color 200ms ease,
+              color 200ms ease,
+              box-shadow 200ms ease;
+}
+
+.secondaryBtn:hover {
+  transform: translateY(-1px);
+  background-color: rgba(92, 235, 170, 0.08);
+  border-color: rgba(92, 235, 170, 0.45);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+
+.secondaryBtn:hover .btnIcon {
+  color: #5cebaa;
+}
+
+.secondaryBtn:active {
+  transform: translateY(0) scale(0.99);
+  transition-duration: 80ms;
+}
+
+.secondaryBtn:focus-visible {
+  outline: 2px solid #5cebaa;
+  outline-offset: 3px;
+}
+
+.btnIcon {
+  flex-shrink: 0;
+  transition: color 200ms ease;
+}
+
+.arrowIcon {
+  display: inline-block;
+  flex-shrink: 0;
+  transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.primaryBtn:hover .arrowIcon,
+.secondaryBtn:hover .arrowIcon {
+  transform: translateX(3px);
+}
+
+/* ─── Responsive ─────────────────────────────────────────── */
+
+/*
+  The image naturally scales with width:100% / height:auto.
+  We only need to adjust text layout for narrow screens where
+  the navy area becomes too small to hold all the text.
+*/
+
+/* Tablet: city artwork becomes crowded, expand text zone */
+@media (max-width: 900px) {
+  .heroContent {
+    max-width: clamp(240px, 50%, 420px);
+  }
+}
+
+/*
+  Mobile: switch to stacked layout.
+  The background image is still there but we let content
+  wrap below it, avoiding horizontal scroll.
+*/
+@media (max-width: 640px) {
+  .hero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .heroBgWrapper {
+    /* Show only the right ~65% of the image on mobile
+       by clipping via overflow:hidden and object-position */
+    overflow: hidden;
+    max-height: 220px;
+  }
+
+  .heroBgImg {
+    /* On mobile show the city side (right portion) */
+    object-fit: cover !important;
+    object-position: right center !important;
+    width: 100% !important;
+    height: 220px !important;
+  }
+
+  /* Un-absolute the text so it stacks below the image */
+  .heroOverlay {
+    position: static;
+    padding: 24px 24px 32px;
+    background-color: #0d1526;
+  }
+
+  .heroContent {
+    max-width: 100%;
+  }
+
+  .heroHeading {
+    font-size: 1.75rem;
+  }
+
+  .heroActions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .primaryBtn,
+  .secondaryBtn {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .heroHeading {
+    font-size: 1.5rem;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .primaryBtn,
+  .secondaryBtn {
+    transform: none !important;
+    transition: background-color 200ms ease, box-shadow 200ms ease, border-color 200ms ease !important;
+  }
+  .primaryBtn:hover,
+  .primaryBtn:active,
+  .secondaryBtn:hover,
+  .secondaryBtn:active {
+    transform: none !important;
+  }
+  .arrowIcon {
+    transition: none !important;
+    transform: none !important;
+  }
+}
+

@@ -1,0 +1,380 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  z-index: var(--z-sticky, 20);
+  background-color: transparent;
+  transition: background-color var(--transition-base, 250ms ease),
+              backdrop-filter var(--transition-base, 250ms ease),
+              border-color var(--transition-base, 250ms ease);
+  border-bottom: 1px solid transparent;
+}
+
+.headerScrolled {
+  background-color: rgba(15, 23, 41, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border-light, #1e2d47);
+}
+
+.navContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  text-decoration: none;
+}
+
+.logoPulse {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoText {
+  font-family: var(--font-heading);
+  font-size: var(--fs-xl, 1.5rem);
+  font-weight: var(--fw-bold, 700);
+  letter-spacing: var(--ls-tight, -0.02em);
+  color: var(--color-text-primary, #ffffff);
+}
+
+.desktopNav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.navLink {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: var(--fw-medium, 500);
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  position: relative;
+  padding: 4px 0;
+  transition: color 200ms ease;
+}
+
+.navLink::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--color-accent-mint, #5cebaa);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.navLink:hover {
+  color: #ffffff;
+}
+
+.navLink:hover::after {
+  transform: scaleX(1);
+}
+
+.navLink:focus-visible {
+  outline: 2px solid var(--color-accent-mint, #5cebaa);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.navActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4, 16px);
+}
+
+.adminBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  background-color: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-body);
+  font-size: 0.83rem;
+  font-weight: var(--fw-medium, 500);
+  padding: 7px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 200ms ease,
+              background-color 200ms ease,
+              color 200ms ease,
+              box-shadow 200ms ease,
+              transform 150ms ease;
+}
+
+.adminBtn:hover {
+  background-color: rgba(92, 235, 170, 0.07);
+  border-color: rgba(92, 235, 170, 0.45);
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(92, 235, 170, 0.1);
+}
+
+.adminBtn:hover .adminIcon {
+  color: #5cebaa;
+  transform: scale(1.05);
+}
+
+.adminBtn:active {
+  transform: scale(0.98);
+}
+
+.adminBtn:focus-visible {
+  outline: 2px solid var(--color-accent-mint, #5cebaa);
+  outline-offset: 2px;
+}
+
+.adminIcon {
+  color: rgba(92, 235, 170, 0.85);
+  transition: color 200ms ease, transform 200ms ease;
+  flex-shrink: 0;
+}
+
+.mobileToggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 25;
+}
+
+.hamburgerBar {
+  width: 22px;
+  height: 2px;
+  background-color: var(--color-text-primary, #ffffff);
+  border-radius: 2px;
+  transition: all var(--transition-fast, 150ms ease);
+}
+
+.barOpen1 {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.barOpen2 {
+  opacity: 0;
+}
+
+.barOpen3 {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.mobileDrawer {
+  display: none;
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background-color: rgba(15, 23, 41, 0.98);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border, #2a3a55);
+  padding: var(--space-6, 24px);
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--transition-base, 250ms ease),
+              opacity var(--transition-base, 250ms ease);
+}
+
+.mobileDrawerOpen {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mobileNavLinks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4, 16px);
+}
+
+.mobileNavLink {
+  font-family: var(--font-body);
+  font-size: var(--fs-md, 1.125rem);
+  font-weight: var(--fw-medium, 500);
+  color: var(--color-text-secondary, #94a3b8);
+  text-decoration: none;
+  padding: 8px 0;
+}
+
+.navLinkBtn {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: var(--fw-medium, 500);
+  color: rgba(255, 255, 255, 0.75);
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+  padding: 4px 0;
+  transition: color 200ms ease;
+}
+
+.navLinkBtn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+  width: 100%;
+  height: 1.5px;
+  background-color: var(--color-accent-mint, #5cebaa);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.navLinkBtn:hover {
+  color: #ffffff;
+}
+
+.navLinkBtn:hover::after {
+  transform: scaleX(1);
+}
+
+.navLinkBtn:focus-visible {
+  outline: 2px solid var(--color-accent-mint, #5cebaa);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.signInBtn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2, 8px);
+  background-color: rgba(15, 23, 42, 0.45);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: rgba(255, 255, 255, 0.9);
+  font-family: var(--font-body);
+  font-size: 0.83rem;
+  font-weight: var(--fw-medium, 500);
+  padding: 7px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: border-color 200ms ease,
+              background-color 200ms ease,
+              color 200ms ease,
+              box-shadow 200ms ease,
+              transform 150ms ease;
+  margin-left: 8px;
+}
+
+.signInBtn:hover {
+  background-color: rgba(92, 235, 170, 0.08);
+  border-color: rgba(92, 235, 170, 0.45);
+  color: #ffffff;
+  box-shadow: 0 2px 12px rgba(92, 235, 170, 0.1);
+}
+
+.signInBtn:hover .signInIcon {
+  color: #5cebaa;
+  transform: scale(1.05);
+}
+
+.signInBtn:active {
+  transform: scale(0.98);
+}
+
+.signInBtn:focus-visible {
+  outline: 2px solid var(--color-accent-mint, #5cebaa);
+  outline-offset: 2px;
+}
+
+.signInIcon {
+  color: rgba(92, 235, 170, 0.85);
+  transition: color 200ms ease, transform 200ms ease;
+  flex-shrink: 0;
+}
+
+.mobileNavLinkBtn {
+  font-family: var(--font-body);
+  font-size: var(--fs-md, 1.125rem);
+  font-weight: var(--fw-medium, 500);
+  color: var(--color-text-secondary, #94a3b8);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  text-align: left;
+}
+
+.mobileNavLinkBtn:hover {
+  color: var(--color-accent-mint, #5cebaa);
+}
+
+.mobileSignInBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3, 12px);
+  width: 100%;
+  background-color: var(--color-bg-card, #1a2744);
+  border: 1px solid var(--color-border, #2a3a55);
+  color: var(--color-text-primary, #ffffff);
+  padding: 12px;
+  border-radius: var(--radius-md, 10px);
+  font-family: var(--font-body);
+  font-size: var(--fs-base, 1rem);
+  font-weight: var(--fw-medium, 500);
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+@media (max-width: 868px) {
+  .desktopNav {
+    display: none;
+  }
+
+  .adminBtn {
+    display: none;
+  }
+
+  .mobileToggle {
+    display: flex;
+  }
+
+  .mobileDrawer {
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navLink::after {
+    transition: none !important;
+  }
+  .adminBtn {
+    transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease !important;
+    transform: none !important;
+  }
+  .adminBtn:hover .adminIcon {
+    transform: none !important;
+  }
+}
+

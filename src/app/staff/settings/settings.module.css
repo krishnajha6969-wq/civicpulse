@@ -1,0 +1,1309 @@
+/* ==========================================================================
+   CivicPulse — Ward Staff Portal: Profile & Settings CSS Module
+   Strict implementation matching approved reference design.
+   ========================================================================== */
+
+/* ── Main Layout ── */
+.layoutContainer {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #070c18;
+  color: #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+  width: 250px;
+  min-width: 250px;
+  background: #0b1329;
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 40;
+  padding: 20px 14px 16px;
+  overflow-y: auto;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.sidebarLogoArea {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 8px 16px;
+}
+
+.logoIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logoText {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #ffffff;
+}
+
+.sidebarSectionTitle {
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #64748b;
+  margin: 14px 8px 8px;
+}
+
+/* Sidebar Nav Items */
+.navItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #94a3b8;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  width: 100%;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  position: relative;
+  text-align: left;
+}
+
+.navItem:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #e2e8f0;
+}
+
+.navItemActive {
+  background: rgba(0, 229, 153, 0.1) !important;
+  color: #00e599 !important;
+  font-weight: 600;
+  box-shadow: inset 0 0 12px rgba(0, 229, 153, 0.08);
+}
+
+.navActiveIndicator {
+  position: absolute;
+  left: 0;
+  top: 6px;
+  bottom: 6px;
+  width: 3.5px;
+  background: #00e599;
+  border-radius: 0 3px 3px 0;
+  box-shadow: 0 0 8px rgba(0, 229, 153, 0.6);
+}
+
+.navIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Sidebar Promo Card */
+.sidebarPromo {
+  margin-top: auto;
+  padding: 14px;
+  background: linear-gradient(145deg, #0f1c3a 0%, #0d172e 100%);
+  border: 1px solid rgba(0, 229, 153, 0.2);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.promoImgContainer {
+  position: relative;
+  width: 100%;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #091024;
+}
+
+.promoText {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.35;
+}
+
+.promoSubtext {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.4;
+}
+
+/* ── Main Content Wrapper ── */
+.mainWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ── Top Header ── */
+.topHeader {
+  height: 64px;
+  background: #0b1329;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  gap: 16px;
+}
+
+.mobileMenuBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: #cbd5e1;
+  cursor: pointer;
+  padding: 6px;
+}
+
+.searchBar {
+  flex: 1;
+  max-width: 540px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #070d1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 14px;
+}
+
+.searchIcon {
+  color: #64748b;
+  display: flex;
+  align-items: center;
+}
+
+.searchInput {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f1f5f9;
+  font-size: 13px;
+  width: 100%;
+}
+
+.searchInput::placeholder {
+  color: #64748b;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.wardPill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #070d1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 7px 12px;
+  color: #f1f5f9;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wardPill:hover {
+  border-color: rgba(0, 229, 153, 0.4);
+}
+
+.wardPinIcon {
+  color: #00e599;
+}
+
+.notificationBtn {
+  position: relative;
+  background: #070d1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.notificationBtn:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.16);
+}
+
+.badgeCount {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ef4444;
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #070d1e;
+}
+
+.profilePill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  transition: background 0.15s ease;
+  position: relative;
+}
+
+.profilePill:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.profileAvatarSmall {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+  border: 1.5px solid rgba(14, 165, 233, 0.5);
+  overflow: hidden;
+}
+
+.profileInfo {
+  text-align: left;
+  line-height: 1.25;
+}
+
+.profileName {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.profileRole {
+  font-size: 11px;
+  color: #64748b;
+}
+
+.profileDropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 220px;
+  background: #0f1c3a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  z-index: 100;
+}
+
+.dropdownItem {
+  width: 100%;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: #cbd5e1;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dropdownItem:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.dropdownItemDanger {
+  color: #ef4444;
+}
+
+.dropdownItemDanger:hover {
+  background: rgba(239, 68, 68, 0.12);
+  color: #fca5a5;
+}
+
+/* ── Page Body ── */
+.pageBody {
+  padding: 24px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Banner Card ── */
+.bannerCard {
+  position: relative;
+  height: 180px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #091024;
+}
+
+.bannerBgImage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center right;
+  z-index: 1;
+}
+
+.bannerOverlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(7, 12, 24, 0.96) 0%,
+    rgba(7, 12, 24, 0.88) 35%,
+    rgba(7, 12, 24, 0.45) 70%,
+    rgba(7, 12, 24, 0.25) 100%
+  );
+  z-index: 2;
+}
+
+.bannerContent {
+  position: relative;
+  z-index: 3;
+  padding: 0 32px;
+  max-width: 620px;
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  margin-bottom: 8px;
+}
+
+.crumbLink {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.crumbLink:hover {
+  color: #94a3b8;
+}
+
+.crumbSep {
+  color: #475569;
+}
+
+.crumbActive {
+  color: #cbd5e1;
+  font-weight: 500;
+}
+
+.bannerTitle {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+  margin: 0 0 6px;
+}
+
+.bannerSubtitle {
+  font-size: 13.5px;
+  color: #94a3b8;
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Banner Right Slogan */
+.bannerRightSlogan {
+  position: relative;
+  z-index: 3;
+  padding-right: 42px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.sloganLine {
+  font-size: 18px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.sloganSmileCurve {
+  margin-top: 6px;
+  width: 90px;
+  height: 10px;
+}
+
+/* ── Main Content Grid ── */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+/* ── Panel Card Common ── */
+.panelCard {
+  background: #0f1c3a;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.cardHeaderIcon {
+  color: #00e599;
+  display: flex;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.cardHeaderTitle {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 3px;
+}
+
+.cardHeaderSubtitle {
+  font-size: 12px;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+/* ── Left Column: My Profile Card ── */
+.profileHeaderSection {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  margin-bottom: 20px;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.avatarLarge {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  border: 2px solid rgba(14, 165, 233, 0.5);
+  box-shadow: 0 4px 16px rgba(14, 165, 233, 0.25);
+  overflow: hidden;
+}
+
+.cameraBtn {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #0f1c3a;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.cameraBtn:hover {
+  background: #1e293b;
+  color: #00e599;
+  border-color: #00e599;
+}
+
+.profileHeaderText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profileHeaderNameRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileMainName {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.3px;
+}
+
+.activeBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #22c55e;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 20px;
+}
+
+.activeDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.6);
+}
+
+.profileMainRole {
+  font-size: 13px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.profileMainLocation {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* Profile Field Rows */
+.profileFieldsList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profileFieldItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.fieldLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.fieldIconBox {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  flex-shrink: 0;
+}
+
+.fieldInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.fieldLabel {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.fieldValue {
+  font-size: 13px;
+  color: #e2e8f0;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.editActionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: #0ea5e9;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.editActionBtn:hover {
+  background: rgba(14, 165, 233, 0.12);
+  color: #38bdf8;
+}
+
+/* ── Right Column: Stacked Layout ── */
+.rightColumn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Upper Right: Ward & Assignment Details */
+.assignmentCardsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+.subDetailCard {
+  background: #091024;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.subCardIconBox {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.iconBlue {
+  background: rgba(14, 165, 233, 0.15);
+  color: #0ea5e9;
+  border: 1px solid rgba(14, 165, 233, 0.3);
+}
+
+.iconPurple {
+  background: rgba(168, 85, 247, 0.15);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.iconAmber {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.subCardText {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.subCardLabel {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.subCardMain {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.subCardSub {
+  font-size: 11.5px;
+  color: #94a3b8;
+}
+
+/* Middle Row: Notification Preferences + Change Password */
+.midTwoCardsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* Notification Toggles */
+.notificationTogglesList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.toggleLeft {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  flex: 1;
+}
+
+.toggleIconBox {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.toggleTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f1f5f9;
+  margin-bottom: 2px;
+}
+
+.toggleDesc {
+  font-size: 11.5px;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+/* Custom Switch */
+.switchTrack {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.switchTrackOn {
+  background: #00e599;
+  border-color: #00e599;
+  box-shadow: 0 0 10px rgba(0, 229, 153, 0.35);
+}
+
+.switchThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.switchThumbOn {
+  transform: translateX(20px);
+  background: #070c18;
+}
+
+/* Change Password Form */
+.passwordForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.formLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.passwordInputWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.formInput {
+  width: 100%;
+  background: #070d1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 9px 36px 9px 12px;
+  font-size: 13px;
+  color: #ffffff;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.formInput:focus {
+  border-color: #00e599;
+  box-shadow: 0 0 0 2px rgba(0, 229, 153, 0.2);
+}
+
+.eyeToggleBtn {
+  position: absolute;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.eyeToggleBtn:hover {
+  color: #cbd5e1;
+}
+
+.passwordHint {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.35;
+  margin-top: -2px;
+}
+
+.updatePasswordBtn {
+  margin-top: 4px;
+  background: #00e599;
+  color: #070c18;
+  font-size: 13.5px;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 229, 153, 0.25);
+}
+
+.updatePasswordBtn:hover {
+  background: #10f4a8;
+  box-shadow: 0 4px 16px rgba(0, 229, 153, 0.4);
+  transform: translateY(-1px);
+}
+
+.updatePasswordBtn:active {
+  transform: translateY(0);
+}
+
+/* Bottom Row: App Preferences + Account Actions */
+.bottomTwoCardsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+/* App Preferences Items */
+.prefRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+}
+
+.prefRow:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.prefLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.prefSelectWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.prefSelect {
+  background: #070d1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 7px 30px 7px 12px;
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  min-width: 140px;
+}
+
+.prefSelect:focus {
+  border-color: #00e599;
+}
+
+.selectArrow {
+  position: absolute;
+  right: 10px;
+  color: #64748b;
+  pointer-events: none;
+}
+
+/* Account Actions */
+.actionRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 0;
+}
+
+.actionRow:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.actionBtnDownload {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #070d1e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e2e8f0;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.actionBtnDownload:hover {
+  background: #111c38;
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+.actionBtnSignOut {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  color: #ef4444;
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.actionBtnSignOut:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #fca5a5;
+}
+
+/* ── Modal Overlay for Edit Profile ── */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+  padding: 16px;
+}
+
+.modalCard {
+  background: #0f1c3a;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 480px;
+  padding: 24px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 12px;
+}
+
+.modalTitle {
+  font-size: 17px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.modalCloseBtn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 4px;
+}
+
+.modalCloseBtn:hover {
+  color: #ffffff;
+}
+
+.modalActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 6px;
+}
+
+.btnCancel {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnCancel:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.btnSave {
+  background: #00e599;
+  border: none;
+  color: #070c18;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btnSave:hover {
+  background: #10f4a8;
+}
+
+/* ── Toast Notification ── */
+.toastNotification {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: #0f2d2a;
+  border: 1px solid #00e599;
+  color: #00e599;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 250;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ── Mobile Overlay ── */
+.mobileOverlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 95;
+}
+
+/* ── Responsive Media Queries ── */
+@media (max-width: 1200px) {
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+  .assignmentCardsRow {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebarOpen {
+    transform: translateX(0);
+  }
+  .mobileOverlayOpen {
+    display: block;
+  }
+  .mainWrapper {
+    /* Full width on mobile */
+  }
+  .mobileMenuBtn {
+    display: block;
+  }
+  .bannerRightSlogan {
+    display: none;
+  }
+  .midTwoCardsRow {
+    grid-template-columns: 1fr;
+  }
+  .bottomTwoCardsRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .topHeader {
+    padding: 0 16px;
+  }
+  .pageBody {
+    padding: 16px;
+  }
+  .searchBar {
+    display: none;
+  }
+  .bannerCard {
+    height: auto;
+    padding: 24px 18px;
+  }
+  .bannerContent {
+    padding: 0;
+  }
+  .bannerTitle {
+    font-size: 22px;
+  }
+  .assignmentCardsRow {
+    grid-template-columns: 1fr;
+  }
+  .profileFieldItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .editActionBtn {
+    align-self: flex-end;
+  }
+  .prefRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .prefSelectWrapper {
+    width: 100%;
+  }
+  .prefSelect {
+    width: 100%;
+  }
+  .actionRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .actionBtnDownload,
+  .actionBtnSignOut {
+    width: 100%;
+    justify-content: center;
+  }
+}
